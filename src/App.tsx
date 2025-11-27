@@ -9,7 +9,7 @@ function App() {
         options={options}
         labelKey="label"
         valueKey="value"
-        placeholder="Select an category"
+        placeholder="Select a category"
         onChange={(option) => console.log(option)}
       />
     </div>
