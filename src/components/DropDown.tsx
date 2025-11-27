@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
 import { ChevronDownIcon } from "lucide-react";
 import DropdownOption from "./DropdownOption";
+import useDropdown from "./useDropdown";
 
 type DropDownProps<T> = {
   options: T[];
@@ -13,7 +13,6 @@ type DropDownProps<T> = {
 };
 
 export default function DropDown<T>(props: DropDownProps<T>) {
-  // destructuring props
   const {
     options,
     labelKey,
@@ -23,34 +22,8 @@ export default function DropDown<T>(props: DropDownProps<T>) {
     onChange,
     className,
   } = props;
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<T | null>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
-
-  const handleSelect = (option: T) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-    onChange?.(option);
-  };
+  const { isOpen, selectedOption, dropdownRef, handleSelect, toggle } =
+    useDropdown<T>({ onChange });
 
   return (
     <div
@@ -59,7 +32,7 @@ export default function DropDown<T>(props: DropDownProps<T>) {
     >
       <button
         type="button"
-        onClick={() => !disabled && setIsOpen(!isOpen)}
+        onClick={() => !disabled && toggle()}
         disabled={disabled}
         className={`px-4 py-2 bg-white rounded-xl border-2 border-blue-500 focus:outline-none min-w-xs text-left flex items-center justify-between ${
           disabled
