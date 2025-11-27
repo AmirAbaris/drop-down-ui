@@ -43,7 +43,8 @@ export default function useDropdown<T>(props: UseDropdownProps<T>) {
   useEffect(() => {
     if (!isOpen) return;
 
-    setHighlightedIndex(0);
+    // hilight no item untill keyboard navigation is used
+    setHighlightedIndex(-1);
 
     const handleKeyDown = (event: KeyboardEvent) => {
       switch (event.key) {
