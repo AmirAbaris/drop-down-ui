@@ -64,7 +64,7 @@ export default function DropDown<T>(props: DropDownProps<T>) {
       </button>
 
       {isOpen && !disabled && (
-        <div className="absolute py-1 z-10 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-auto">
+        <div className="absolute py-1 z-10 mt-2 w-full bg-white border border-gray-200 rounded-2xl shadow-lg max-h-60 overflow-auto">
           {options.length === 0 ? (
             <div className="px-2 py-1 text-gray-400 text-sm">
               No options available
